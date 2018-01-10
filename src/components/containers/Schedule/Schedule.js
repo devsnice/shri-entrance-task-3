@@ -14,7 +14,11 @@ const MY_QUERY = gql`
 
 class Schedule extends Component {
   static propTypes = {
-    users: PropTypes.array.isRequired
+    users: PropTypes.array
+  };
+
+  static defaultProps = {
+    users: []
   };
 
   render() {
