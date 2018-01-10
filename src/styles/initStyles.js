@@ -9,6 +9,11 @@ const initStyles = () => {
       height: 100%;
       font-family: ${theme.fontDefault}
     }
+
+    #root, .application {
+      width: 100%;
+      height: 100%;
+    }
     
     * {
       box-sizing: border-box;

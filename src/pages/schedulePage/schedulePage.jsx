@@ -6,7 +6,7 @@ import Schedule from '../../components/containers/Schedule/Schedule';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="application">
         <Header />
         <Schedule />
       </div>

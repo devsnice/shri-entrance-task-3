@@ -4,6 +4,16 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import {
+  ScheduleWrapper,
+  ScheduleTimeline,
+  ScheduleNav,
+  ScheduleNavContent,
+  ScheduleNavContentDate,
+  ScheduleNavContentTimeline
+} from './ScheduleUnits';
+import ScheduleGrid from './ScheduleGrid/ScheduleGrid';
+
 const MY_QUERY = gql`
   query {
     users {
@@ -22,7 +32,21 @@ class Schedule extends Component {
   };
 
   render() {
-    return <div>Schedule</div>;
+    return (
+      <ScheduleWrapper className="schedule">
+        <ScheduleTimeline className="schedule-timeline" id="schedule">
+          <ScheduleNav className="schedule-nav">
+            <ScheduleNavContent className="schedule-nav__content">
+              <ScheduleNavContentDate />
+              <ScheduleNavContentTimeline />
+            </ScheduleNavContent>
+          </ScheduleNav>
+
+          <ScheduleGrid />
+          
+        </ScheduleTimeline>
+      </ScheduleWrapper>
+    );
   }
 }
 
