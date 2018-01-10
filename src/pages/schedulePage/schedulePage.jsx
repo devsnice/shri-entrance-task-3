@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Schedule from '../../components/containers/Schedule/Schedule';
 
 class App extends Component {
   render() {
@@ -7,6 +8,8 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Schedule Page</h1>
         </header>
+
+        <Schedule />
       </div>
     );
   }
