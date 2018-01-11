@@ -51,9 +51,9 @@ class ScheduleFloors extends Component {
   render() {
     return (
       <Wrapper>
-        {this.renderFloors()}
-
         <StagesUnderlayer />
+
+        {this.renderFloors()}
       </Wrapper>
     );
   }

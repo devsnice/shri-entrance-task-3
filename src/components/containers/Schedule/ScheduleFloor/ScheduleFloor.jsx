@@ -6,6 +6,8 @@ import media from 'styled-media-query';
 
 import { Box } from 'grid-styled';
 
+import FloorRoom from './FloorRoom/FloorRoom';
+
 const Wrapper = styled(Box)`
   position: relative;
   padding-top: 21px;
@@ -44,15 +46,19 @@ class ScheduleFloor extends Component {
 
   static defaultProps = {};
 
+  renderRooms = () => {
+    const { rooms } = this.props;
+
+    return rooms.map(room => <FloorRoom key={room.id} {...room} />);
+  };
+
   render() {
-    const { floorNumber, rooms } = this.props;
+    const { floorNumber } = this.props;
 
     return (
       <Wrapper>
-        <FloorLabel>{floorNumber}</FloorLabel>
-        <FloorRooms>
-          <Box />
-        </FloorRooms>
+        <FloorLabel>{`${floorNumber} Этаж`}</FloorLabel>
+        <FloorRooms>{this.renderRooms()}</FloorRooms>
       </Wrapper>
     );
   }
