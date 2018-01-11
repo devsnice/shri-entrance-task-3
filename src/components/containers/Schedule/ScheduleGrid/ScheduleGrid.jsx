@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import {
   ScheduleGridWrapper,
@@ -9,34 +10,17 @@ import {
   ScheduleGridCurrentTimeLine
 } from './ScheduleGridUnits';
 
-/* 
-  Utility function
-*/
-
-const getPositionOfHourLineFromLeftSide = hour => {
-  // column width of one hour is 65px
-  const hourColumnWidth = 65;
-  // grid table begins from 8 a.m
-  const firstWorkHour = 8;
-  // offset from left side of grid
-  const offsetFromLeftBorder = 35;
-
-  return hourColumnWidth * (hour - (firstWorkHour - 1)) - offsetFromLeftBorder;
-};
+import { getPositionOfTimeFromLeftSide } from '../utils/utils';
 
 class GridCurrentTimeLine extends Component {
   state = {
-    hour: new Date().getHours(),
-    minutes: new Date().getMinutes()
+    time: new Date()
   };
 
   componentDidMount() {
     this.timer = setInterval(() => {
-      const time = new Date();
-
       this.setState({
-        hour: time.getHours(),
-        minutes: time.getMinutes()
+        time: new Date()
       });
     }, 1000 * 60);
   }
@@ -46,22 +30,11 @@ class GridCurrentTimeLine extends Component {
   }
 
   render() {
-    const hour = this.state.hour;
-    const minute = this.state.minutes;
-
-    const timeInHours = hour + minute / 60;
-
-    const formattedMinutes =
-      minute.toString().length === 1
-        ? minute === 0 ? '00' : `0${minute}`
-        : minute;
-
-    const formattedTime = `${hour}:${formattedMinutes}`;
+    const { time } = this.state;
+    const formattedTime = `${moment(time).hours()}:${moment(time).minutes()}`;
 
     return (
-      <ScheduleGridCurrentTimeLine
-        left={getPositionOfHourLineFromLeftSide(timeInHours)}
-      >
+      <ScheduleGridCurrentTimeLine left={getPositionOfTimeFromLeftSide(time)}>
         <ScheduleGridCurrentTimeLegend>
           {formattedTime}
         </ScheduleGridCurrentTimeLegend>
@@ -77,7 +50,7 @@ class ScheduleGrid extends Component {
     for (let hour = 8; hour <= 23; hour++) {
       lines.push(
         <ScheduleGridHourLine
-          left={getPositionOfHourLineFromLeftSide(hour)}
+          left={getPositionOfTimeFromLeftSide(hour)}
           key={hour}
         >
           <ScheduleGridHourLegend>{hour}</ScheduleGridHourLegend>
