@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import media from 'styled-media-query';
 
 import { Box, Flex } from 'grid-styled';
+import { Link } from 'react-router-dom';
+
 import Button from '../Button/Button';
 import logotype from './logo.svg';
 
@@ -50,16 +52,18 @@ class Header extends Component {
       <Wrapper is="header" className="header">
         <HeaderContent className="header__content">
           <h1 className="header__logo">
-            <a href="/index.html">
+            <Link to="/">
               <HeaderLogoImage
                 is="img"
                 src={logotype}
                 alt="Яндекс переговорки"
               />
-            </a>
+            </Link>
           </h1>
           <HeaderControls className="header__controls">
-            <Button type="blue">Создать встречу</Button>
+            <Link to="/event">
+              <Button type="blue">Создать встречу</Button>
+            </Link>
           </HeaderControls>
         </HeaderContent>
       </Wrapper>
