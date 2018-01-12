@@ -9,15 +9,6 @@ import moment from 'moment';
 
 import FloorRoomEventInterval from './FloorRoomEventInterval/FloorRoomEventInterval';
 
-const Wrapper = styled(Flex)`
-  margin-bottom: 16px;
-  width: 1280px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
-
 const RoomDescription = styled(Box)`
   width: 245px;
 
@@ -54,6 +45,21 @@ const RoomSchedule = styled(Box)`
     height: 58px;
     width: calc(100% - 145px);
   `};
+`;
+
+const Wrapper = styled(Flex)`
+  margin-bottom: 16px;
+  width: 1280px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    ${RoomLabel} {
+      color: #0070e0;
+    }
+  }
 `;
 
 class FloorRoom extends Component {
