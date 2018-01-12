@@ -16,6 +16,8 @@ import {
   getPositionOfTimeFromLeftSide
 } from '../utils/utils';
 
+import { formatTime } from '../utils/timeUtils';
+
 class GridCurrentTimeLine extends Component {
   state = {
     time: new Date()
@@ -35,7 +37,7 @@ class GridCurrentTimeLine extends Component {
 
   render() {
     const { time } = this.state;
-    const formattedTime = `${moment(time).hours()}:${moment(time).minutes()}`;
+    const formattedTime = formatTime(time);
 
     return (
       <ScheduleGridCurrentTimeLine left={getPositionOfTimeFromLeftSide(time)}>

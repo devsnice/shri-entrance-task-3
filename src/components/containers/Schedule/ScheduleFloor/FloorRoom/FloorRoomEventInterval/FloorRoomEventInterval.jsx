@@ -12,6 +12,8 @@ import {
   getPositionOfTimeFromLeftSide
 } from '../../../utils/utils';
 
+import EventInformationTooltip from './EventInformationTooltip/EventInformationTooltip';
+
 const roomEventIntervalReservedStyles = css`
   background-color: #d5dfe9;
 
@@ -45,6 +47,22 @@ class FloorRoomEventInterval extends Component {
     reserved: false
   };
 
+  state = {
+    tooltipIsOpen: false
+  };
+
+  openTooltip = () => {
+    this.setState({
+      tooltipIsOpen: true
+    });
+  };
+
+  closeTooltip = () => {
+    this.setState({
+      tooltipIsOpen: false
+    });
+  };
+
   render = () => {
     const { event, reserved } = this.props;
 
@@ -61,7 +79,14 @@ class FloorRoomEventInterval extends Component {
         left={getPositionOfTimeFromLeftSide(event.dateStart)}
         width={width}
         reserved={reserved}
-      />
+        onClick={this.openTooltip}
+      >
+        <EventInformationTooltip
+          event={event}
+          isOpen={this.state.tooltipIsOpen}
+          handleClose={this.closeTooltip}
+        />
+      </RoomEventIntervalWrapper>
     );
   };
 }

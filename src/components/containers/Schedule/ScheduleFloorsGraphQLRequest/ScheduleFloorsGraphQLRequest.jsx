@@ -41,7 +41,10 @@ class ScheduleFloorsGraphQLRequest extends Component {
         [floorNumber]: {
           rooms: {
             [roomTitle]: {
-              events: [Event],
+              events: [{
+                ...Event,
+                roomTitle
+              }],
               ...roomInformation
             }
           },
@@ -65,7 +68,8 @@ class ScheduleFloorsGraphQLRequest extends Component {
             [room.title]: {
               events: [
                 {
-                  ...restEventData
+                  ...restEventData,
+                  roomTitle: room.title
                 }
               ],
               ...event.room
@@ -80,7 +84,12 @@ class ScheduleFloorsGraphQLRequest extends Component {
             rooms: {
               ...floors[room.floor].rooms,
               [room.title]: {
-                events: [restEventData],
+                events: [
+                  {
+                    ...restEventData,
+                    roomTitle: room.title
+                  }
+                ],
                 ...room
               }
             }

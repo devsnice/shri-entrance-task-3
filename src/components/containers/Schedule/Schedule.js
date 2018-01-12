@@ -33,7 +33,7 @@ class Schedule extends Component {
   };
 
   state = {
-    currentDay: moment().format('MM-DD-YYYY')
+    currentDay: moment()
   };
 
   handleChangeDay = newDay => {
@@ -45,9 +45,13 @@ class Schedule extends Component {
   render() {
     const { data } = this.props;
 
-    const currentDayString = this.state.currentDay.toString();
+    const currentDayString = this.state.currentDay
+      .format('MM-DD-YYYY')
+      .toString();
+
     const nextDayString = moment(this.state.currentDay)
       .add(1, 'days')
+      .format('MM-DD-YYYY')
       .toString();
 
     return (
