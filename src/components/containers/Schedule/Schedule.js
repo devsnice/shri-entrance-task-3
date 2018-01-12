@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 
 import {
   ScheduleWrapper,
+  ScheduleDatepickerMobile,
   ScheduleTimeline,
   ScheduleNav,
   ScheduleNavContent,
@@ -15,6 +16,8 @@ import {
 
 import ScheduleGrid from './ScheduleGrid/ScheduleGrid';
 import ScheduleFloors from './ScheduleFloors/ScheduleFloors';
+
+import DateChanger from '../../units/DateChanger/DateChanger';
 
 const MY_QUERY = gql`
   query {
@@ -173,15 +176,25 @@ class Schedule extends Component {
     }
   };
 
+  handleChangeDate(value) {
+    alert(value);
+  }
+
   render() {
     const { data } = this.props;
 
     return (
       <ScheduleWrapper>
+        <ScheduleDatepickerMobile>
+          <DateChanger handleChange={this.handleChangeDate} />
+        </ScheduleDatepickerMobile>
+
         <ScheduleTimeline id="schedule">
           <ScheduleNav>
             <ScheduleNavContent>
-              <ScheduleNavContentDate />
+              <ScheduleNavContentDate>
+                <DateChanger handleChange={this.handleChangeDate} />
+              </ScheduleNavContentDate>
               <ScheduleNavContentTimeline />
             </ScheduleNavContent>
           </ScheduleNav>

@@ -5,11 +5,13 @@ import media from 'styled-media-query';
 
 import { Box, Flex } from 'grid-styled';
 
-const ScheduleWrapper = styled(Flex).attrs({
-  justify: 'center'
-})`
+const ScheduleWrapper = styled(Box)`
   height: calc(100% - 72px);
   width: 100%;
+
+  ${media.lessThan('small')`
+    height: calc(100% - 48px);
+  `};
 `;
 
 const ScheduleTimeline = styled(Box)`
@@ -20,9 +22,19 @@ const ScheduleTimeline = styled(Box)`
   overflow-x: scroll;
   overflow-y: visible;
   position: relative;
+  margin-left: auto;
+  margin-right: auto;
 
   ${media.lessThan('small')`
     height: calc(100% - 56px);
+  `};
+`;
+
+const ScheduleDatepickerMobile = styled(Box)`
+  display: none;
+
+  ${media.lessThan('small')`
+    display: block;
   `};
 `;
 
@@ -56,6 +68,7 @@ const ScheduleNavContentTimeline = styled(Box)`
 
 export {
   ScheduleWrapper,
+  ScheduleDatepickerMobile,
   ScheduleTimeline,
   ScheduleNav,
   ScheduleNavContent,

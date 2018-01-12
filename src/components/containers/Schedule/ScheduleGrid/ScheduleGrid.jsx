@@ -10,7 +10,11 @@ import {
   ScheduleGridCurrentTimeLine
 } from './ScheduleGridUnits';
 
-import { getPositionOfTimeFromLeftSide } from '../utils/utils';
+import {
+  FIRST_WORK_HOUR,
+  LAST_WORK_HOUR,
+  getPositionOfTimeFromLeftSide
+} from '../utils/utils';
 
 class GridCurrentTimeLine extends Component {
   state = {
@@ -47,7 +51,7 @@ class ScheduleGrid extends Component {
   renderGridTableLines() {
     const lines = [];
 
-    for (let hour = 8; hour <= 23; hour++) {
+    for (let hour = FIRST_WORK_HOUR; hour <= LAST_WORK_HOUR; hour++) {
       lines.push(
         <ScheduleGridHourLine
           left={getPositionOfTimeFromLeftSide(hour)}

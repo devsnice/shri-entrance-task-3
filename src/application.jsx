@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
@@ -8,6 +7,8 @@ import apolloClient from './store/apolloClient';
 
 import initStyles from './styles/initStyles';
 import theme from './styles/theme';
+
+import Icons from './components/units/Icons/Icons';
 
 import SchedulePage from './pages/schedulePage/schedulePage';
 
@@ -18,7 +19,10 @@ class Application extends React.Component {
     return (
       <ApolloProvider client={apolloClient}>
         <ThemeProvider theme={theme}>
-          <SchedulePage />
+          <div className="application">
+            <Icons />
+            <SchedulePage />
+          </div>
         </ThemeProvider>
       </ApolloProvider>
     );
