@@ -30,6 +30,7 @@ class Icon extends React.Component {
       <SvgIcon
         is="svg"
         role="img"
+        className="icon"
         dangerouslySetInnerHTML={{ __html: useTag }}
       />
     );

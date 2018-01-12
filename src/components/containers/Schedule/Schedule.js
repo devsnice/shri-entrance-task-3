@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import moment from 'moment';
 
 import {
   ScheduleWrapper,
@@ -17,29 +15,9 @@ import {
 import ScheduleGrid from './ScheduleGrid/ScheduleGrid';
 import ScheduleFloors from './ScheduleFloors/ScheduleFloors';
 
-import DateChanger from '../../units/DateChanger/DateChanger';
+import ScheduleFloorsGraphQLRequest from './ScheduleFloorsGraphQLRequest/ScheduleFloorsGraphQLRequest';
 
-const MY_QUERY = gql`
-  query {
-    events {
-      id
-      title
-      dateStart
-      dateEnd
-      users {
-        id
-        login
-        avatarUrl
-      }
-      room {
-        id
-        title
-        floor
-        capacity
-      }
-    }
-  }
-`;
+import DateChanger from '../../units/DateChanger/DateChanger';
 
 class Schedule extends Component {
   static propTypes = {
@@ -54,157 +32,56 @@ class Schedule extends Component {
     }
   };
 
-  /*
-      Transform our graphQL result to the convenient structure
+  state = {
+    currentDay: moment().format('MM-DD-YYYY')
+  };
 
-      floors {
-        [floorNumber]: {
-          rooms: {
-            [roomTitle]: {
-              events: [Event],
-              ...roomInformation
-            }
-          },
-          floorNumber
-        }
-      }
-
-  */
-
-  transformEventsToFloorsHashTable = events => {
-    const floors = {};
-
-    events.forEach(event => {
-      const { room, ...restEventData } = event;
-
-      // Create a new floor, if there is the first event on this floor
-      if (!floors[room.floor]) {
-        floors[room.floor] = {
-          floorNumber: room.floor,
-          rooms: {
-            [room.title]: {
-              events: [
-                {
-                  ...restEventData
-                }
-              ],
-              ...event.room
-            }
-          }
-        };
-      } else {
-        // Create a new room, if there is the first event in this room
-        if (!floors[room.floor].rooms[room.title]) {
-          floors[room.floor] = {
-            ...floors[room.floor],
-            rooms: {
-              ...floors[room.floor].rooms,
-              [room.title]: {
-                events: [restEventData],
-                ...room
-              }
-            }
-          };
-          // Save event in the existed room on the existed floor
-        } else {
-          floors[room.floor] = {
-            ...floors[room.floor],
-            rooms: {
-              ...floors[room.floor].rooms,
-              [room.title]: {
-                ...floors[room.floor].rooms[room.title],
-                events: [
-                  ...floors[room.floor].rooms[room.title].events,
-                  restEventData
-                ]
-              }
-            }
-          };
-        }
-      }
+  handleChangeDay = newDay => {
+    this.setState({
+      currentDay: newDay
     });
-
-    return floors;
   };
-
-  /*
-      Transform hash table of Floors to Array
-
-      floors [{
-        rooms: [
-          [
-            events: [Event],
-            ...roomInformation
-          ]
-        ],
-        floorNumber
-      }]
-
-  */
-
-  transformFloorsHashTableToArray = floorsHashTable => {
-    const floorsArray = Object.keys(floorsHashTable).map(floorNumber => {
-      const floor = floorsHashTable[floorNumber];
-
-      const floorRoomsArray = Object.keys(floor.rooms).map(
-        roomTitle => floor.rooms[roomTitle]
-      );
-
-      floor.rooms = floorRoomsArray;
-
-      return floor;
-    });
-
-    return floorsArray;
-  };
-
-  getFloorsOfEvents = () => {
-    const { data } = this.props;
-
-    // TODO: loader, error fetching
-    if (data.networkStatus === 7 && !data.error) {
-      const hashTableOfFloors = this.transformEventsToFloorsHashTable(
-        data.events
-      );
-      const arrayOfFloors = this.transformFloorsHashTableToArray(
-        hashTableOfFloors
-      );
-
-      return arrayOfFloors;
-    } else {
-      return [];
-    }
-  };
-
-  handleChangeDate(value) {
-    alert(value);
-  }
 
   render() {
     const { data } = this.props;
 
+    const currentDayString = this.state.currentDay.toString();
+    const nextDayString = moment(this.state.currentDay)
+      .add(1, 'days')
+      .toString();
+
     return (
       <ScheduleWrapper>
         <ScheduleDatepickerMobile>
-          <DateChanger handleChange={this.handleChangeDate} />
+          <DateChanger
+            currentDay={this.state.currentDay}
+            handleChange={this.handleChangeDay}
+          />
         </ScheduleDatepickerMobile>
 
         <ScheduleTimeline id="schedule">
           <ScheduleNav>
             <ScheduleNavContent>
               <ScheduleNavContentDate>
-                <DateChanger handleChange={this.handleChangeDate} />
+                <DateChanger
+                  currentDay={this.state.currentDay}
+                  handleChange={this.handleChangeDay}
+                />
               </ScheduleNavContentDate>
               <ScheduleNavContentTimeline />
             </ScheduleNavContent>
           </ScheduleNav>
 
           <ScheduleGrid />
-          <ScheduleFloors floors={this.getFloorsOfEvents()} />
+
+          <ScheduleFloorsGraphQLRequest
+            dateStart={currentDayString}
+            dateEnd={nextDayString}
+          />
         </ScheduleTimeline>
       </ScheduleWrapper>
     );
   }
 }
 
-export default graphql(MY_QUERY)(Schedule);
+export default Schedule;

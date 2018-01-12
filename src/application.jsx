@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
@@ -13,6 +14,7 @@ import Icons from './components/units/Icons/Icons';
 import SchedulePage from './pages/schedulePage/schedulePage';
 
 initStyles();
+moment.locale('ru');
 
 class Application extends React.Component {
   render() {

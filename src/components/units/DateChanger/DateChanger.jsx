@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 import media from 'styled-media-query';
+import moment from 'moment';
 
 import { Box, Flex } from 'grid-styled';
-import Icon from '../Icons/Icon';
+import Control from '../Control/Control';
 
 import DatePicker from '../DatePicker/DatePicker';
 
@@ -46,30 +47,41 @@ const ControlDate = styled(Box)`
 
 class DateChanger extends Component {
   static propTypes = {
-    handleChange: PropTypes.func.isRequired
+    handleChange: PropTypes.func.isRequired,
+    currentDay: PropTypes.object.isRequired
   };
 
-  state = {
-    value: '10.01.2018'
+  setPreviousDay = () => {
+    const previousDay = moment(this.props.currentDay).subtract(1, 'days');
+
+    this.changeDay(previousDay);
   };
 
-  setPreviousDay = () => {};
+  setNextDay = () => {
+    const nextDay = moment(this.props.currentDay).add(1, 'days');
 
-  setNextDay = () => {};
+    this.changeDay(nextDay);
+  };
+
+  changeDay = day => {
+    this.props.handleChange(day);
+  };
 
   // <DatePicker />
 
   render() {
+    const { currentDay } = this.props;
+
     return (
       <DateChangerWrapper>
         <ControlDate type="prev" onClick={this.setPreviousDay}>
-          <Icon iconName="arrow" />
+          <Control iconName="arrow" />
         </ControlDate>
 
-        <DateLabel>{this.state.value}</DateLabel>
+        <DateLabel>{moment(currentDay).format('D MMM')}</DateLabel>
 
         <ControlDate type="next" onClick={this.setNextDay}>
-          <Icon iconName="arrow" />
+          <Control iconName="arrow" />
         </ControlDate>
 
         <DatePickerWrapper />
