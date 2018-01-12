@@ -36,9 +36,9 @@ const ScheduleGridHourLegend = styled.span`
   margin-bottom: 16px;
   font-size: 11px;
   transform: translateX(-50%);
-  font-family: $fontBold;
+  font-family: ${props => props.theme.fontBold};
   letter-spacing: 0.4px;
-  color: #252525;
+  color: ${props => (props.past ? '#858e98' : '#252525')};
 
   ${media.lessThan('small')`
     margin-bottom: 10px;

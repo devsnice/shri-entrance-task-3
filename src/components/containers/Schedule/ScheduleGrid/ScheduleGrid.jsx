@@ -19,28 +19,14 @@ import {
 import { formatTime } from '../utils/timeUtils';
 
 class GridCurrentTimeLine extends Component {
-  state = {
-    time: new Date()
-  };
-
-  componentDidMount() {
-    this.timer = setInterval(() => {
-      this.setState({
-        time: new Date()
-      });
-    }, 1000 * 60);
-  }
-
-  componentWillMount() {
-    clearTimeout(this.timer);
-  }
-
   render() {
-    const { time } = this.state;
-    const formattedTime = formatTime(time);
+    const { currentTime } = this.props;
+    const formattedTime = formatTime(currentTime);
 
     return (
-      <ScheduleGridCurrentTimeLine left={getPositionOfTimeFromLeftSide(time)}>
+      <ScheduleGridCurrentTimeLine
+        left={getPositionOfTimeFromLeftSide(currentTime)}
+      >
         <ScheduleGridCurrentTimeLegend>
           {formattedTime}
         </ScheduleGridCurrentTimeLegend>
@@ -50,16 +36,38 @@ class GridCurrentTimeLine extends Component {
 }
 
 class ScheduleGrid extends Component {
+  state = {
+    currentTime: new Date()
+  };
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState({
+        currentTime: new Date()
+      });
+    }, 1000 * 60);
+  }
+
+  componentWillMount() {
+    clearTimeout(this.timer);
+  }
+
   renderGridTableLines() {
     const lines = [];
 
+    const currentHour = moment(this.props.currentTime).hours();
+
     for (let hour = FIRST_WORK_HOUR; hour <= LAST_WORK_HOUR; hour++) {
+      const hourIsPast = hour < currentHour;
+
       lines.push(
         <ScheduleGridHourLine
           left={getPositionOfTimeFromLeftSide(hour)}
           key={hour}
         >
-          <ScheduleGridHourLegend>{hour}</ScheduleGridHourLegend>
+          <ScheduleGridHourLegend past={hourIsPast}>
+            {hour}
+          </ScheduleGridHourLegend>
         </ScheduleGridHourLine>
       );
     }
@@ -73,7 +81,7 @@ class ScheduleGrid extends Component {
         <ScheduleGridTable>
           {this.renderGridTableLines()}
 
-          <GridCurrentTimeLine />
+          <GridCurrentTimeLine currentTime={this.state.currentTime} />
         </ScheduleGridTable>
       </ScheduleGridWrapper>
     );
