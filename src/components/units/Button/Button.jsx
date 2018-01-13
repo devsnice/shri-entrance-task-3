@@ -123,11 +123,23 @@ class Button extends Component {
     styles: {}
   };
 
+  handleClick = e => {
+    e.preventDefault();
+
+    this.props.onClick && this.props.onClick();
+  };
+
   render() {
     const { children, size, type, styles } = this.props;
 
     return (
-      <Wrapper is="button" size={size} type={type} {...styles}>
+      <Wrapper
+        onClick={this.handleClick}
+        is="button"
+        size={size}
+        type={type}
+        {...styles}
+      >
         {children}
       </Wrapper>
     );

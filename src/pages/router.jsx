@@ -14,8 +14,8 @@ class ApplicationRouter extends Component {
           <Header />
 
           <Route exact path="/" component={SchedulePage} />
-          <Route exact path="/event" component={EventEditorPage} />
-          <Route exact path="/event/:id" component={EventEditorPage} />
+          <Route exact path="/eventEditor" component={EventEditorPage} />
+          <Route exact path="/eventEditor/:id" component={EventEditorPage} />
         </div>
       </BrowserRouter>
     );

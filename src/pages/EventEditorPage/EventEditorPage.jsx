@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 
+import Layout from '../../components/units/Layout/Layout';
 import Header from '../../components/units/Header/Header';
-import Schedule from '../../components/containers/Schedule/Schedule';
+
+import EventEditor from '../../components/containers/EventEditor/EventEditor';
 
 class EventEditorPage extends Component {
+  componentDidMount() {
+    console.log(this.props.match.params);
+  }
+
   render() {
-    return <div>Editor</div>;
+    return (
+      <Layout>
+        <EventEditor />
+      </Layout>
+    );
   }
 }
 
