@@ -56,7 +56,7 @@ class Person extends Component {
     const { name, description } = this.props;
 
     return [
-      <PersonSeparator key="separator">${` · `}</PersonSeparator>,
+      <PersonSeparator key="separator">{` · `}</PersonSeparator>,
       <PersonDescription key="description">{description}</PersonDescription>
     ];
   };
