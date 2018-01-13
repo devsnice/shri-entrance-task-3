@@ -51,6 +51,10 @@ class DateChanger extends Component {
     currentDay: PropTypes.object.isRequired
   };
 
+  state = {
+    calendarIsOpen: false
+  };
+
   setPreviousDay = () => {
     const previousDay = moment(this.props.currentDay).subtract(1, 'days');
 
@@ -67,7 +71,17 @@ class DateChanger extends Component {
     this.props.handleChange(day);
   };
 
-  // <DatePicker />
+  handleOpenCalendar = () => {
+    this.setState({
+      calendarIsOpen: true
+    });
+  };
+
+  handleCloseCalendar = () => {
+    this.setState({
+      calendarIsOpen: false
+    });
+  };
 
   render() {
     const { currentDay } = this.props;
@@ -78,13 +92,23 @@ class DateChanger extends Component {
           <Control iconName="arrow" />
         </ControlDate>
 
-        <DateLabel>{moment(currentDay).format('D MMM')}</DateLabel>
+        <DateLabel onClick={this.handleOpenCalendar}>
+          {moment(currentDay).format('D MMM')}
+        </DateLabel>
 
         <ControlDate type="next" onClick={this.setNextDay}>
           <Control iconName="arrow" />
         </ControlDate>
 
-        <DatePickerWrapper />
+        <DatePickerWrapper>
+          <DatePicker
+            handleChange={this.state.calendarIsOpen}
+            closeDatePicker={this.handleCloseCalendar}
+            handleChange={this.changeDay}
+            initialDate={currentDay}
+            isOpen={this.state.calendarIsOpen}
+          />
+        </DatePickerWrapper>
       </DateChangerWrapper>
     );
   }
