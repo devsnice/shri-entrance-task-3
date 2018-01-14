@@ -7,6 +7,8 @@ import SchedulePage from './SchedulePage/SchedulePage';
 import CreateEventPage from './CreateEventPage/CreateEventPage';
 import EditEventPage from './EditEventPage/EditEventPage';
 
+import Popup from '../components/containers/Popup/Popup';
+
 class ApplicationRouter extends Component {
   render() {
     return (
@@ -17,6 +19,8 @@ class ApplicationRouter extends Component {
           <Route exact path="/" component={SchedulePage} />
           <Route exact path="/eventEditor" component={CreateEventPage} />
           <Route exact path="/eventEditor/:id" component={EditEventPage} />
+
+          <Popup />
         </div>
       </BrowserRouter>
     );

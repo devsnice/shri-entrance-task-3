@@ -111,7 +111,8 @@ const Wrapper = styled(Box)`
 
 class Button extends Component {
   static propTypes = {
-    children: PropTypes.string.isRequired,
+    children: PropTypes.oneOfType([PropTypes.string, PropTypes.node.isRequired])
+      .isRequired,
     size: PropTypes.oneOf(['default', 'big']),
     styleType: PropTypes.oneOf(['blue', 'grey', 'warning']),
     type: PropTypes.string,
