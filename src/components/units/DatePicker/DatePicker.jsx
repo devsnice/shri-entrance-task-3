@@ -3,50 +3,76 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 import media from 'styled-media-query';
+import moment from 'moment';
 
-import { Box } from 'grid-styled';
+import { Box, Flex } from 'grid-styled';
+import Control from '../Control/Control';
+import Icon from '../Icons/Icon';
+import Input from '../Input/Input';
 
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+import Calendar from '../Calendar/Calendar';
 
-import { DayPicker } from 'react-dates';
+const DatePickerBox = styled(Box)`
+  width: 100%;
+  position: relative;
+`;
 
-const DayPickerBox = styled(Box)`
-  width: 720px;
-
-  ${media.lessThan('small')`
-    width: 100%;
-    overflow-y: scroll;
-  `};
+const CalendarBox = styled(Box)`
+  position: absolute;
+  top: 100%;
+  z-index: 50;
 `;
 
 class DatePicker extends Component {
   static propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    closeDatePicker: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
-    initialDate: PropTypes.object.isRequired
+    currentDay: PropTypes.object.isRequired
   };
 
-  handleChangeDate = date => {
-    this.props.handleChange(date);
-    this.props.closeDatePicker();
+  state = {
+    calendarIsOpen: false
+  };
+
+  changeDay = day => {
+    this.props.handleChange(day);
+  };
+
+  handleOpenCalendar = e => {
+    this.setState({
+      calendarIsOpen: true
+    });
+  };
+
+  handleCloseCalendar = () => {
+    this.setState({
+      calendarIsOpen: false
+    });
   };
 
   render() {
-    const { isOpen, initialDate } = this.props;
-
-    if (!isOpen) return null;
+    const { currentDay } = this.props;
 
     return (
-      <DayPickerBox>
-        <DayPicker
-          onOutsideClick={this.props.closeDatePicker}
-          onDayClick={this.handleChangeDate}
-          numberOfMonths={3}
-          initialDate={initialDate}
+      <DatePickerBox>
+        <Input
+          label="Дата"
+          placeholder="Дата"
+          iconElement={<Icon iconName="calendar" />}
+          onClick={this.handleOpenCalendar}
+          onFocus={this.handleOpenCalendar}
+          readOnly
         />
-      </DayPickerBox>
+
+        <CalendarBox>
+          <Calendar
+            handleChange={this.state.calendarIsOpen}
+            closeDatePicker={this.handleCloseCalendar}
+            handleChange={this.changeDay}
+            numberOfMonths={1}
+            isOpen={this.state.calendarIsOpen}
+          />
+        </CalendarBox>
+      </DatePickerBox>
     );
   }
 }
