@@ -7,6 +7,9 @@ import gql from 'graphql-tag';
 
 import { Link } from 'react-router-dom';
 
+import { dispatch } from '../../../store/reduxStore';
+import { openPopup } from '../../../store/reduxModels/popup';
+
 import Control from '../../units/Control/Control';
 import Button from '../../units/Button/Button';
 
@@ -22,6 +25,7 @@ import EventEditorForm from './EventEditorForm/EventEditorForm';
 class EditEventEditor extends Component {
   static propTypes = {
     editEvent: PropTypes.func.isRequired,
+    removeEvent: PropTypes.func.isRequired,
     id: PropTypes.string.isRequired
   };
 
@@ -34,11 +38,26 @@ class EditEventEditor extends Component {
         }
       })
       .then(({ data }) => {
+        // todo::add popup
         console.log('got data', data);
       })
       .catch(error => {
         console.log('there was an error sending the query', error);
       });
+  };
+
+  handleDeleteEvent = () => {
+    dispatch(
+      openPopup({
+        type: 'confirmDeleteEvent',
+        event: {
+          id: this.props.id
+        },
+        actions: {
+          delete: this.props.removeEvent
+        }
+      })
+    );
   };
 
   formatEventDataForForm = event => {
@@ -78,7 +97,9 @@ class EditEventEditor extends Component {
         <Header>
           <HeaderTitle>Редактирование встречи</HeaderTitle>
           <HeaderClose>
-            <Control iconName="close" />
+            <Link to="/">
+              <Control iconName="close" />
+            </Link>
           </HeaderClose>
         </Header>
 
@@ -87,6 +108,7 @@ class EditEventEditor extends Component {
             formType="edit"
             initialValues={formInitialValues}
             handleEditEvent={this.handleEditEvent}
+            handleDeleteEvent={this.handleDeleteEvent}
           />
         )}
       </EventEditorWrapper>
@@ -104,6 +126,14 @@ const editEvent = gql`
       title
       dateStart
       dateEnd
+    }
+  }
+`;
+
+const removeEvent = gql`
+  mutation($id: ID!) {
+    removeEvent(id: $id) {
+      id
     }
   }
 `;
@@ -127,5 +157,6 @@ const EventForEditingQuery = gql`
 
 export default compose(
   graphql(editEvent, { name: 'editEvent' }),
+  graphql(removeEvent, { name: 'removeEvent' }),
   graphql(EventForEditingQuery, { name: 'data' })
 )(EditEventEditor);

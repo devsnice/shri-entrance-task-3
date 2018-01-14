@@ -2,8 +2,9 @@ const OPEN_POPUP = 'OPEN_POPUP';
 const CLOSE_POPUP = 'CLOSE_POPUP';
 
 const defaultState = {
-  type: '',
-  event: {}
+  type: null,
+  event: {},
+  popupActions: {}
 };
 
 function popup(state = defaultState, action) {
@@ -13,23 +14,24 @@ function popup(state = defaultState, action) {
     case OPEN_POPUP:
       return {
         type: payload.type,
-        event: payload.event
+        event: payload.event,
+        popupActions: payload.actions
       };
     case CLOSE_POPUP:
       return {
-        type: null,
-        event: null
+        ...defaultState
       };
     default:
       return state;
   }
 }
 
-export const openPopup = ({ type, event }) => ({
+export const openPopup = ({ type, event, actions }) => ({
   type: OPEN_POPUP,
   payload: {
     type,
-    event
+    event,
+    actions
   }
 });
 

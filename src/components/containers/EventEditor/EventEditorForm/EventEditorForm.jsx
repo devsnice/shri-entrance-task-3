@@ -34,12 +34,16 @@ class EventEditorForm extends Component {
   static propTypes = {
     handleCreateEvent: PropTypes.func,
     handleEditEvent: PropTypes.func,
+    handleDeleteEvent: PropTypes.func,
     formType: PropTypes.oneOf(['new', 'edit']),
     initialValues: PropTypes.object
   };
 
   static defaultProps = {
-    initialValues: {}
+    initialValues: {},
+    handleCreateEvent: null,
+    handleEditEven: null,
+    handleDeleteEvent: null
   };
 
   /*
@@ -213,7 +217,11 @@ class EventEditorForm extends Component {
                     </Button>
                   </Link>
 
-                  <Button styleType="grey" styles={{ mr: '16px' }}>
+                  <Button
+                    onClick={this.props.handleDeleteEvent}
+                    styleType="grey"
+                    styles={{ mr: '16px' }}
+                  >
                     Удалить встречу
                   </Button>
 

@@ -33,6 +33,7 @@ class CreateEventEditor extends Component {
         variables: values
       })
       .then(({ data }) => {
+        // check validation errors
         dispatch(
           openPopup({
             type: 'eventCreated',

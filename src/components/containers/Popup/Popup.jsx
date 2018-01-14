@@ -27,11 +27,15 @@ const getPopupComponentByType = type => {
 class Popup extends Component {
   static propTypes = {
     event: PropTypes.object,
+    actions: PropTypes.object,
+    popupActions: PropTypes.object,
     type: PropTypes.string
   };
 
   static defaultProps = {
     type: null,
+    actions: PropTypes.object,
+    popupActions: {},
     event: {}
   };
 
@@ -40,7 +44,7 @@ class Popup extends Component {
   };
 
   render() {
-    const { type, event } = this.props;
+    const { type, event, actions, popupActions } = this.props;
 
     const PopupComponent = getPopupComponentByType(type);
 
@@ -50,6 +54,7 @@ class Popup extends Component {
       <Overlay>
         <PopupComponent
           event={event}
+          actions={popupActions}
           handleClosePopup={this.handleClosePopup}
         />
       </Overlay>
@@ -58,7 +63,11 @@ class Popup extends Component {
 }
 
 function mapStateToProps(state) {
-  return { type: state.type, event: state.event };
+  return {
+    type: state.type,
+    event: state.event,
+    popupActions: state.popupActions
+  };
 }
 
 function mapDispatchToProps(dispatch) {
