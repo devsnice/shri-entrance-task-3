@@ -7,6 +7,9 @@ import gql from 'graphql-tag';
 
 import { Link } from 'react-router-dom';
 
+import { dispatch } from '../../../store/reduxStore';
+import { openPopup } from '../../../store/reduxModels/popup';
+
 import Control from '../../units/Control/Control';
 import Button from '../../units/Button/Button';
 
@@ -30,7 +33,12 @@ class CreateEventEditor extends Component {
         variables: values
       })
       .then(({ data }) => {
-        console.log('got data', data);
+        dispatch(
+          openPopup({
+            type: 'eventCreated',
+            event: data.createEvent
+          })
+        );
       })
       .catch(error => {
         console.log('there was an error sending the query', error);
@@ -43,12 +51,14 @@ class CreateEventEditor extends Component {
         <Header>
           <HeaderTitle>Новая встреча</HeaderTitle>
           <HeaderClose>
-            <Control iconName="close" />
+            <Link to="/">
+              <Control iconName="close" />
+            </Link>
           </HeaderClose>
         </Header>
 
         <EventEditorForm
-          formType="create"
+          formType="new"
           handleCreateEvent={this.handleCreateEvent}
         />
       </EventEditorWrapper>
@@ -73,6 +83,10 @@ const createEvent = gql`
       title
       dateStart
       dateEnd
+      room {
+        title
+        floor
+      }
     }
   }
 `;
