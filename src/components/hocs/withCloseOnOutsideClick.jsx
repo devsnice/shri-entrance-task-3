@@ -35,9 +35,11 @@ const withCloseOnOutsideClick = WrappedComponent => {
     handleRef = elem => (this.ref = elem);
 
     render() {
+      const { handleClose, ...restProps } = this.props;
+
       return (
         <div ref={this.handleRef}>
-          <WrappedComponent {...this.props} />
+          <WrappedComponent {...restProps} />
         </div>
       );
     }

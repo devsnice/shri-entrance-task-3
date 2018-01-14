@@ -21,7 +21,9 @@ const MembersQuery = gql`
 
 class MembersMultiselect extends Component {
   static propTypes = {
-    handleOnChange: PropTypes.func.isRequired
+    name: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    value: PropTypes.array.isRequired
   };
 
   // TODO: add error fetching, move this logic outside
@@ -33,14 +35,21 @@ class MembersMultiselect extends Component {
     }
   };
 
+  handleChangeValue = value => {
+    const { name } = this.props;
+
+    this.props.handleChange(name, value);
+  };
+
   render() {
-    const { handleOnChange } = this.props;
+    const { handleChange, value } = this.props;
 
     return (
       <Multiselect
         label="Участники"
         list={this.getUsersList()}
-        handleOnChange={handleOnChange}
+        value={value}
+        handleOnChange={this.handleChangeValue}
       />
     );
   }

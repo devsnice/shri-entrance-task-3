@@ -109,6 +109,7 @@ class Dropdown extends React.Component {
   renderDropdownList = () => {
     const { list } = this.props;
 
+    // TODO: add filter by users floor
     const filteredList = list.filter(
       item => item.login.indexOf(this.state.filterValue) !== -1
     );
@@ -124,6 +125,7 @@ class Dropdown extends React.Component {
             onClick={() => {
               this.handleSelectDropdownItem(item);
             }}
+            key={item.id}
           >
             <Person {...item} description={`${item.homeFloor} этаж`} />
           </DropdownListItem>
@@ -141,6 +143,7 @@ class Dropdown extends React.Component {
           onChange={this.handleFilterList}
           label={label}
           placeholder={placeholder}
+          value={this.state.filterValue}
         />
 
         <DropdownContent

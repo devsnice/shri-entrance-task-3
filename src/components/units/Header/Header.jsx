@@ -62,7 +62,7 @@ class Header extends Component {
           </h1>
           <HeaderControls className="header__controls">
             <Link to="/eventEditor">
-              <Button type="blue">Создать встречу</Button>
+              <Button styleType="blue">Создать встречу</Button>
             </Link>
           </HeaderControls>
         </HeaderContent>

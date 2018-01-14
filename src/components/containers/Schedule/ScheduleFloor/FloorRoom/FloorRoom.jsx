@@ -74,7 +74,7 @@ class FloorRoom extends Component {
     const { events } = this.props;
 
     return events.map(event => (
-      <FloorRoomEventInterval event={event} reserved />
+      <FloorRoomEventInterval key={event.id} event={event} reserved />
     ));
   };
 

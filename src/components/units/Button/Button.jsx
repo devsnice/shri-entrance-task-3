@@ -89,7 +89,7 @@ const Wrapper = styled(Box)`
   `};
 
   ${props => {
-    switch (props.type) {
+    switch (props.styleType) {
       case 'blue':
         return blueButtonStyle;
       case 'grey':
@@ -113,24 +113,24 @@ class Button extends Component {
   static propTypes = {
     children: PropTypes.string.isRequired,
     size: PropTypes.oneOf(['default', 'big']),
-    type: PropTypes.oneOf(['blue', 'grey', 'warning']),
+    styleType: PropTypes.oneOf(['blue', 'grey', 'warning']),
+    type: PropTypes.string,
     styles: PropTypes.object
   };
 
   static defaultProps = {
     size: 'default',
-    type: 'blue',
+    styleType: 'blue',
+    type: '',
     styles: {}
   };
 
   handleClick = e => {
-    e.preventDefault();
-
-    this.props.onClick && this.props.onClick();
+    this.props.onClick && this.props.onClick(e);
   };
 
   render() {
-    const { children, size, type, styles } = this.props;
+    const { children, size, type, styleType, styles } = this.props;
 
     return (
       <Wrapper
@@ -138,6 +138,7 @@ class Button extends Component {
         is="button"
         size={size}
         type={type}
+        styleType={styleType}
         {...styles}
       >
         {children}

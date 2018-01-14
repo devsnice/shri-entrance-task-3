@@ -34,8 +34,7 @@ const formatEventPeriodTime = (dateStart, dateEnd) => {
 class EventInformationTooltip extends React.Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    event: PropTypes.object.isRequired,
-    handleClose: PropTypes.func.isRequired
+    event: PropTypes.object.isRequired
   };
 
   render() {

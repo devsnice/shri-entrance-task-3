@@ -14,32 +14,20 @@ import {
   EventEditorWrapper,
   HeaderTitle,
   Header,
-  HeaderClose,
-  Body,
-  BodyColumn,
-  BodyColumnMobile,
-  BodyColumnDesktop,
-  EditorControls,
-  EditorControlsButtons
+  HeaderClose
 } from './EventEditorUnits';
+
+import EventEditorForm from './EventEditorForm/EventEditorForm';
 
 class EventEditor extends Component {
   static propTypes = {
     createEvent: PropTypes.func.isRequired
   };
 
-  handleCreateEvent = () => {
-    console.log('click');
-
+  handleCreateEvent = values => {
     this.props
       .createEvent({
-        variables: {
-          title: 'New event',
-          dateStart: '2018-01-13T10:49:37.008Z',
-          dateEnd: '2018-01-13T14:49:37.008Z',
-          usersIds: ['1'],
-          roomId: '1'
-        }
+        variables: values
       })
       .then(({ data }) => {
         console.log('got data', data);
@@ -59,24 +47,7 @@ class EventEditor extends Component {
           </HeaderClose>
         </Header>
 
-        <Body>
-          <BodyColumn>Input</BodyColumn>
-          <BodyColumn hasBorderOnMobile>Date and time</BodyColumn>
-          <BodyColumn hasBorderOnMobile>Мултиселект</BodyColumn>
-          <BodyColumn hasBorderOnMobile>Рекомендации</BodyColumn>
-        </Body>
-
-        <EditorControls>
-          <EditorControlsButtons>
-            <Link to="/">
-              <Button type="grey" styles={{ mr: '16px' }}>
-                Отмена
-              </Button>
-            </Link>
-
-            <Button onClick={this.handleCreateEvent}>Создать встречу</Button>
-          </EditorControlsButtons>
-        </EditorControls>
+        <EventEditorForm handleCreateEvent={this.handleCreateEvent} />
       </EventEditorWrapper>
     );
   }

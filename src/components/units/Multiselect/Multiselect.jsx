@@ -20,34 +20,28 @@ class Multiselect extends React.Component {
   static propTypes = {
     handleOnChange: PropTypes.func.isRequired,
     label: PropTypes.string,
-    list: PropTypes.array
+    list: PropTypes.array,
+    value: PropTypes.array
   };
 
   static defaultProps = {
     label: null,
+    value: [],
     list: []
   };
 
-  state = {
-    value: []
-  };
-
   handleSelectItem = item => {
-    this.setState({
-      value: [...this.state.value, item]
-    });
+    const newValue = [...this.props.value, item.id];
 
-    this.props.handleOnChange(this.state.value);
+    this.props.handleOnChange(newValue);
   };
 
   handleRemoveItem = id => {
-    this.setState({
-      value: this.state.value.filter(item => {
-        item.id !== id;
-      })
+    const newValue = this.props.value.filter(item => {
+      item.id !== id;
     });
 
-    this.props.handleOnChange(this.state.value);
+    this.props.handleOnChange(newValue);
   };
 
   render() {
@@ -56,14 +50,19 @@ class Multiselect extends React.Component {
     return (
       <Box>
         <Label label={label} />
-        <Dropdown list={list} handleSelectItem={this.handleSelectItem} />
+        <Dropdown
+          placeholder="Например, Тор Одинович"
+          list={list}
+          handleSelectItem={this.handleSelectItem}
+        />
 
         <MultiselectSelection>
-          {this.state.value.map(item => {
+          {this.props.value.map(item => {
             return (
               <MultiselectSelectedUser
                 handleRemove={this.handleRemoveItem}
                 item={item}
+                key={item.id}
               />
             );
           })}

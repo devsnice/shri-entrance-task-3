@@ -80,11 +80,15 @@ const RecommendationRoomRemove = styled.div`
 `;
 
 class RecommendationRoom extends Component {
-  static PropTypes = {
+  static propTypes = {
     isActive: PropTypes.bool.isRequired,
     room: PropTypes.object.isRequired,
     handleSelectItem: PropTypes.func.isRequired,
     handleRemoveSelection: PropTypes.func.isRequired
+  };
+
+  handleSelectItem = () => {
+    this.props.handleSelectItem(this.props.room.id);
   };
 
   render() {

@@ -8,7 +8,7 @@ import moment from 'moment';
 import { Box, Flex } from 'grid-styled';
 import Control from '../Control/Control';
 
-import DatePicker from '../DatePicker/DatePicker';
+import Calendar from '../Calendar/Calendar';
 
 const DateChangerWrapper = styled(Flex).attrs({
   justify: 'space-between',
@@ -101,11 +101,12 @@ class DateChanger extends Component {
         </ControlDate>
 
         <DatePickerWrapper>
-          <DatePicker
+          <Calendar
             handleChange={this.state.calendarIsOpen}
             closeDatePicker={this.handleCloseCalendar}
             handleChange={this.changeDay}
             initialDate={currentDay}
+            numberOfMonths={3}
             isOpen={this.state.calendarIsOpen}
           />
         </DatePickerWrapper>

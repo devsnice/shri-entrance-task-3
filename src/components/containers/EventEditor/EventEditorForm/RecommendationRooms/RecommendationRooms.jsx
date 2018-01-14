@@ -25,14 +25,20 @@ const RoomsQuery = gql`
 
 class RecommendationRooms extends Component {
   static propTypes = {
-    value: PropTypes.string
+    value: PropTypes.string,
+    handleChange: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired
   };
 
   static defaultProps = {
     value: null
   };
 
-  handleSelectItem = id => {};
+  handleSelectItem = id => {
+    const { name } = this.props;
+
+    this.props.handleChange(name, id);
+  };
 
   handleRemoveSelection = id => {};
 

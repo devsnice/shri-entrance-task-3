@@ -25,8 +25,9 @@ const CalendarBox = styled(Box)`
 
 class DatePicker extends Component {
   static propTypes = {
+    name: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
-    currentDay: PropTypes.object.isRequired
+    value: PropTypes.object.isRequired
   };
 
   state = {
@@ -34,7 +35,9 @@ class DatePicker extends Component {
   };
 
   changeDay = day => {
-    this.props.handleChange(day);
+    const { name } = this.props;
+
+    this.props.handleChange(name, day);
   };
 
   handleOpenCalendar = e => {
@@ -50,12 +53,13 @@ class DatePicker extends Component {
   };
 
   render() {
-    const { currentDay } = this.props;
+    const { value } = this.props;
 
     return (
       <DatePickerBox>
         <Input
           label="Дата"
+          value={moment(value).format('LL')}
           placeholder="Дата"
           iconElement={<Icon iconName="calendar" />}
           onClick={this.handleOpenCalendar}
@@ -69,6 +73,7 @@ class DatePicker extends Component {
             closeDatePicker={this.handleCloseCalendar}
             handleChange={this.changeDay}
             numberOfMonths={1}
+            initialDate={value}
             isOpen={this.state.calendarIsOpen}
           />
         </CalendarBox>

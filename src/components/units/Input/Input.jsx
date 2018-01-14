@@ -44,20 +44,29 @@ const InputIcon = styled.span`
 
 class Input extends React.Component {
   static propTypes = {
+    type: PropTypes.string,
+    name: PropTypes.string,
     iconElement: PropTypes.element,
     label: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-    onBlur: PropTypes.func
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    readOnly: PropTypes.bool
   };
 
   static defaultProps = {
+    name: null,
+    type: 'text',
     iconElement: null,
     label: null,
     placeholder: null,
-    value: null,
-    onBlur: null
+    value: '',
+    onChange: null,
+    onFocus: null,
+    onBlur: null,
+    readOnly: false
   };
 
   render() {
@@ -66,8 +75,13 @@ class Input extends React.Component {
       label,
       placeholder,
       value,
+      type,
+      name,
       onChange,
-      onBlur
+      onBlur,
+      onFocus,
+      onClick,
+      readOnly
     } = this.props;
 
     return (
@@ -76,10 +90,15 @@ class Input extends React.Component {
 
         <Wrapper>
           <InputElement
+            type={type}
+            name={name}
             onChange={onChange}
             onBlur={onBlur}
+            onFocus={onFocus}
+            onClick={onClick}
             placeholder={placeholder}
             value={value}
+            readOnly={readOnly}
           />
 
           {iconElement && <InputIcon>{iconElement}</InputIcon>}
