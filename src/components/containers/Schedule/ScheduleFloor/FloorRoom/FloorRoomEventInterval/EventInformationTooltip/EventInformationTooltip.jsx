@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+import { Link } from 'react-router-dom';
+
 import { Box } from 'grid-styled';
 
 import { formatTime } from '../../../../utils/timeUtils';
@@ -44,7 +46,9 @@ class EventInformationTooltip extends React.Component {
       <Tooltip open={isOpen}>
         <TooltipTriangle />
         <TooltipControl>
-          <Control iconName="edit" />
+          <Link to={`/eventEditor/${event.id}`}>
+            <Control iconName="edit" />
+          </Link>
         </TooltipControl>
 
         <Box>

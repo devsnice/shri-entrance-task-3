@@ -19,7 +19,7 @@ import {
 
 import EventEditorForm from './EventEditorForm/EventEditorForm';
 
-class EventEditor extends Component {
+class CreateEventEditor extends Component {
   static propTypes = {
     createEvent: PropTypes.func.isRequired
   };
@@ -47,7 +47,10 @@ class EventEditor extends Component {
           </HeaderClose>
         </Header>
 
-        <EventEditorForm handleCreateEvent={this.handleCreateEvent} />
+        <EventEditorForm
+          formType="create"
+          handleCreateEvent={this.handleCreateEvent}
+        />
       </EventEditorWrapper>
     );
   }
@@ -74,20 +77,6 @@ const createEvent = gql`
   }
 `;
 
-// const editEvent = gql`
-//   mutation($dateStart: Date, $dateEnd: Date, $title: String) {
-//     updateEvent(
-//       input: { title: $title, dateStart: $dateStart, dateEnd: $dateEnd }
-//     ) {
-//       id
-//       title
-//       dateStart
-//       dateEnd
-//     }
-//   }
-// `;
-
-export default compose(
-  graphql(createEvent, { name: 'createEvent' })
-  //graphql(editEvent, { name: 'editEvent' })
-)(EventEditor);
+export default compose(graphql(createEvent, { name: 'createEvent' }))(
+  CreateEventEditor
+);

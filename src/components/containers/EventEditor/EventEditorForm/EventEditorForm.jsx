@@ -32,7 +32,9 @@ import { EditorControls, EditorControlsButtons } from '../EventEditorUnits';
 
 class EventEditorForm extends Component {
   static propTypes = {
-    handleCreateEvent: PropTypes.func.isRequired,
+    handleCreateEvent: PropTypes.func,
+    handleEditEvent: PropTypes.func,
+    formType: PropTypes.oneOf(['new', 'edit']),
     initialValues: PropTypes.object
   };
 
@@ -88,13 +90,22 @@ class EventEditorForm extends Component {
     this.props.handleCreateEvent(preparedValues);
   };
 
+  editEvent = (values, actions) => {
+    const preparedValues = this.prepareFormValues(values);
+
+    this.props.handleEditEvent(preparedValues);
+  };
+
   render() {
-    const { initialValues } = this.props;
+    const { initialValues, formType } = this.props;
+
+    const formSubmitHandler =
+      formType === 'new' ? this.createEvent : this.editEvent;
 
     return (
       <Formik
         initialValues={initialValues}
-        onSubmit={this.createEvent}
+        onSubmit={formSubmitHandler}
         render={({
           values,
           errors,
@@ -167,7 +178,7 @@ class EventEditorForm extends Component {
               <InputContainer>
                 <MembersMultiselect
                   name="usersIds"
-                  value={values.members}
+                  value={values.usersIds}
                   handleChange={setFieldValue}
                 />
               </InputContainer>
@@ -182,17 +193,35 @@ class EventEditorForm extends Component {
             </BodyColumn>
 
             <EditorControls>
-              <EditorControlsButtons>
-                <Link to="/">
-                  <Button styleType="grey" styles={{ mr: '16px' }}>
-                    Отмена
-                  </Button>
-                </Link>
+              {formType === 'new' ? (
+                <EditorControlsButtons>
+                  <Link to="/">
+                    <Button styleType="grey" styles={{ mr: '16px' }}>
+                      Отмена
+                    </Button>
+                  </Link>
 
-                <Button onClick={handleSubmit} styleType="blue" type="submit">
-                  Создать встречу
-                </Button>
-              </EditorControlsButtons>
+                  <Button onClick={handleSubmit} styleType="blue" type="submit">
+                    Создать встречу
+                  </Button>
+                </EditorControlsButtons>
+              ) : (
+                <EditorControlsButtons>
+                  <Link to="/">
+                    <Button styleType="grey" styles={{ mr: '16px' }}>
+                      Отмена
+                    </Button>
+                  </Link>
+
+                  <Button styleType="grey" styles={{ mr: '16px' }}>
+                    Удалить встречу
+                  </Button>
+
+                  <Button onClick={handleSubmit} styleType="blue" type="submit">
+                    Сохранить
+                  </Button>
+                </EditorControlsButtons>
+              )}
             </EditorControls>
           </Body>
         )}

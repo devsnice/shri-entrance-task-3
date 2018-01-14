@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import Layout from '../../components/units/Layout/Layout';
 import Header from '../../components/units/Header/Header';
 
-import EventEditor from '../../components/containers/EventEditor/EventEditor';
+import CreateEventEditor from '../../components/containers/EventEditor/CreateEventEditor';
 
-class EventEditorPage extends Component {
+class CreateEventPage extends Component {
   componentDidMount() {
     console.log(this.props.match.params);
   }
@@ -13,10 +13,10 @@ class EventEditorPage extends Component {
   render() {
     return (
       <Layout>
-        <EventEditor />
+        <CreateEventEditor />
       </Layout>
     );
   }
 }
 
-export default EventEditorPage;
+export default CreateEventPage;
