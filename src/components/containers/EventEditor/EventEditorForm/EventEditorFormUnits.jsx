@@ -102,9 +102,9 @@ const BodyFieldsRow = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media screen and (max-width: $mobileMaxWidth) {
+  ${media.lessThan('small')`
     display: block;
-  }
+  `};
 `;
 
 export {

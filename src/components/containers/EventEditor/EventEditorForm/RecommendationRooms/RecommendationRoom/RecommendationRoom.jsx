@@ -91,13 +91,14 @@ class RecommendationRoom extends Component {
     this.props.handleSelectItem(this.props.room.id);
   };
 
+  // todo::add recommendation logic,
+  //  <RecommendationRoomTime>10:00 - 11:00</RecommendationRoomTime>
   render() {
     const { room, isActive } = this.props;
 
     return (
       <RecommendationBox onClick={this.handleSelectItem} active={isActive}>
         <RecommendationData>
-          <RecommendationRoomTime>10:00 - 11:00</RecommendationRoomTime>
           <RecommendationRoomName>
             {`${room.title} · ${room.floor} этаж`}
           </RecommendationRoomName>
