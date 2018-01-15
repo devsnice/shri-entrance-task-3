@@ -1,14 +1,7 @@
 ## Запуск
 
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-
+- запустить [сервер](https://github.com/devsnice/shri-entrance-task-1) - запускается на 3001 порту
+- npm start - запускает приложение на 3000 порту
 
 ## Решение
 - React - библитека для написания интерфейса приложения
